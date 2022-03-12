@@ -1,0 +1,31 @@
+.game-box {
+    display: flex;
+    margin: 5px;
+    flex-direction: column;
+}
+
+.game-q {
+    justify-content: center;
+    padding: 30px 50px;
+    text-align: center;
+}
+
+.choices {
+   /* padding: 10px 20px; */
+    align-items: flex-start;
+    width: 50%;
+    margin-left: 200px;
+}
+
+.a, .b, .c, .d {
+    padding: 10px 30px;
+    text-align: center;
+    background-color: antiquewhite;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.a:hover, .b:hover, .c:hover, .d:hover {
+    transform: scale(1.1);
+    background-color:rgb(196, 184, 170);
+}

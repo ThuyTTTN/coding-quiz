@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 100px 100px;
+    padding: 50px 100px;
+}
+
+h2 {
+    font-size: 4vw;
+}
+
+p {
+    font-size: 2vw;
+}
+
+
