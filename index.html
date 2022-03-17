@@ -10,11 +10,25 @@
 <body>
     <header>
         <h1>Coding Quiz</h1>
-        <p>Welcome!  Click start to begin the Coding Quiz!</p>
-        <a href="./game.html" class=" btn">Start</a>
-        <a href="./highscores.html" class="btn" id="highscore-btn">High scores</a>
     </header>
-    
+    <div class="controls">
+        <button id="start-btn" class="start-btn btn">Start</button>
+        <button id="next-btn" class="next-btn btn hide">Next</button>
+        <a href="highscores.html"><button id="highscore-btn" class="btn hide">High Scores</button></a>
+    </div>
+        <div class="container">
+            <div id="question-container" class="hide">
+                <div id="question">Question</div>
+                <div id="answer-btns" class="btn-grid">
+                    <button class="btn"> Answer 1</button>
+                    <button class="btn"> Answer 2</button>
+                    <button class="btn"> Answer 3</button>
+                    <button class="btn"> Answer 4</button>
+                </div>
+            </div>
+            
+        </div> 
+
     <footer>
         &copy; 2022 by Thuy Nguyen
     </footer>

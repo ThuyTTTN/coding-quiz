@@ -1,8 +1,12 @@
-var question = document.querySelector("game-q");
-var choices = array.from(document.querySelectorAll("choices");
-var scoreText = document.querySelector("score");
-var timerEl = document.querySelector("timer");
+// var question = document.querySelector("game-q");
+// var choices = array.from(document.querySelectorAll("choices"));
+// var scoreText = document.querySelector("score");
+// var timerEl = document.querySelector("timer");
 
+var answerChoiceEl = document.querySelector(".a");
+answerChoiceEl.addEventListener("click", function() {
+    alert("answer a clicked");
+});
 
 // var currentQ = {}
 // var correctA = true

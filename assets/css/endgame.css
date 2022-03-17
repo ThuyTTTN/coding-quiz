@@ -13,4 +13,12 @@ p {
     font-size: 2vw;
 }
 
+.text-input {
+    width: 50%;
+    height: 40px;
+    margin-bottom: 10px;
+}
 
+.btn {
+    width: 25%;
+}
