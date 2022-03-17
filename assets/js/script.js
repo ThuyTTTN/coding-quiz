@@ -5,10 +5,30 @@ var questionElement = document.getElementById("question");
 var answerBtnElement = document.getElementById("answer-btns");
 var highscoreBtnElement = document.getElementById("highscore-btn");
 
+var timerEl = document.getElementById('countdown');
+
 var shuffledQuestions, currentQuestionIndex;
+
+function countdown() {
+    var timeLeft =60;              // timer start with 30 sec.
+
+    var timeInterval = setInterval(function() {
+        if(timeLeft > 0) {
+            timerEl.textContent = timeLeft;
+            timeLeft--;
+        } else {
+            timerEl.textContent = '';       // set to empty string to get rid of it
+            clearInterval(timeInterval);    // tells timer to quit
+            highscoreBtnElement.classList.remove('hide');  //highscore show up after the timer
+            questionBoxElement.classList.add('hide');
+        }
+    document.getElementById("countdown").innerHTML = timeLeft + " seconds left";
+    }, 1000);
+}
 
 function startQuiz() {
     startButton.classList.add('hide');      // hide the start button
+    countdown();
     shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
     questionBoxElement.classList.remove('hide');    // shows the question box and choices
