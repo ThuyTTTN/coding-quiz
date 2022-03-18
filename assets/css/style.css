@@ -43,12 +43,13 @@ h1 {
     justify-content: center;
 }
 
-.start-btn, .next-btn {
-    width: 100px;
+.start-btn, .next-btn, .score-btn {
+    width: 20%;
     margin: 6px; 
     font-weight: bold;
     font-size: 1.5vw;
 }
+
 
 .hide {
     display:none;
@@ -75,6 +76,26 @@ h1 {
     margin-left: 200px;
     margin-top: 20px;
     
+}
+
+#enter-initials-box {
+    display: flex;
+}
+
+.initial-box {
+    width: auto;
+    height: 50px;
+    margin: 0;
+}
+
+.text-input {
+    height: 40px;
+    margin: 0;
+}
+
+#enter-initials.btn {
+    margin-top: 2px;
+    width: 100px;
 }
 
 /* footer */

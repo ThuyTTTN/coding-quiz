@@ -1,0 +1,25 @@
+
+
+h2 {
+    text-align: center;
+}
+
+#enter-initials-box {
+    display: flex;
+}
+
+.initial-box {
+    width: auto;
+    height: 50px;
+    margin: 0;
+}
+
+.text-input {
+    height: 40px;
+    margin: 0;
+}
+
+#enter-initials.btn {
+    margin-top: 3px;
+    width: 100px;
+}

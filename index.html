@@ -10,26 +10,37 @@
 <body>
     <header>
         <h1>Coding Quiz</h1>
-        <h2 id="countdown">
+        <h2 id="countdown"></h2>
     </header>
     <div class="controls">
         <button id="start-btn" class="start-btn btn">Start</button>
         <button id="next-btn" class="next-btn btn hide">Next</button>
-        <a href="highscores.html"><button id="highscore-btn" class="btn hide">High Scores</button></a>
+        <button id="highscore-btn" class="score-btn btn hide">High Scores</button>
     </div>
-        <div class="container">
-            <div id="question-container" class="hide">
-                <div id="question">Question</div>
-                <div id="answer-btns" class="btn-grid">
-                    <button class="btn"> Answer 1</button>
-                    <button class="btn"> Answer 2</button>
-                    <button class="btn"> Answer 3</button>
-                    <button class="btn"> Answer 4</button>
-                </div>
+    <div class="container">
+        <div id="question-container" class="hide">
+            <div id="question">Question</div>
+            <div id="answer-btns" class="btn-grid">
+                <button class="btn"> Answer 1</button>
+                <button class="btn"> Answer 2</button>
+                <button class="btn"> Answer 3</button>
+                <button class="btn"> Answer 4</button>
             </div>
-            
-        </div> 
-
+        </div>
+    </div>
+    <div class="container">    
+        <div id="end-container" class="hide">
+            <h3>Quiz Completed!</h3>
+            <form id="enter-initials-box">
+                <div class="initial-box"> 
+                    <input type="text" name="Initials" class="text-input" placeholder= "Enter Initials" /> 
+                </div> 
+                <div class="initial-box">
+                    <button class="btn" id="enter-initials" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>    
+    </div>
     <footer>
         &copy; 2022 by Thuy Nguyen
     </footer>

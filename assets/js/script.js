@@ -4,13 +4,14 @@ var questionBoxElement = document.getElementById("question-container");
 var questionElement = document.getElementById("question");
 var answerBtnElement = document.getElementById("answer-btns");
 var highscoreBtnElement = document.getElementById("highscore-btn");
+var endBoxElement = document.getElementById("end-container");
 
 var timerEl = document.getElementById('countdown');
 
 var shuffledQuestions, currentQuestionIndex;
 
 function countdown() {
-    var timeLeft =60;              // timer start with 30 sec.
+    var timeLeft =60;              // timer start with 60 sec.
 
     var timeInterval = setInterval(function() {
         if(timeLeft > 0) {
@@ -29,6 +30,7 @@ function countdown() {
 function startQuiz() {
     startButton.classList.add('hide');      // hide the start button
     countdown();
+    endBoxElement.classList.add('hide');  // hide the endBox
     shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
     questionBoxElement.classList.remove('hide');    // shows the question box and choices
@@ -54,7 +56,9 @@ function showQuestion(question) {
         answerBtnElement.appendChild(button);
     })
 }
- 
+
+
+
 function resetAnswer() {
     nextButton.classList.add("hide");       //want to hide the 'next' btn when the next answer appears
     while (answerBtnElement.firstChild) {
@@ -65,6 +69,7 @@ function resetAnswer() {
 function selectAnswer(event) { 
     var selectedButton = event.target;
     var correct = selectedButton.dataset.correct;
+    var answerScore = 0;
     questionBoxElement.classList.add('hide');       // hide the question box once the answer is selected so user 
     nextButton.classList.remove("hide");            // can only click on the 'next' button
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
@@ -74,15 +79,18 @@ function selectAnswer(event) {
         answerBtnElement.classList.add('hide');     // hide answer btn choices
         nextButton.classList.add('hide');           // hide next btn
         highscoreBtnElement.classList.remove('hide');       // show 'high score' button
+        endBoxElement.classList.remove('hide');     // show endBox
     }
 }
+
 
 startButton.addEventListener('click', startQuiz);
 nextButton.addEventListener('click', () => {    //currentQuestion function = ++ increment to next q
     currentQuestionIndex++;
     nextQuestion();
 })
- 
+
+
 var questions = [
     {
         question: "Which of the following is not considered a JavaScript pop-up box?",
@@ -134,3 +142,8 @@ var questions = [
 
 
 
+// TO-DO'S:  
+// stop the timer when quiz is done
+// tally up score
+// localStorage to enter initial when game is completed
+// https://stackoverflow.com/questions/61553701/how-can-i-stop-my-timer-function-if-the-quiz-ends-before-time-is-up-javascript
