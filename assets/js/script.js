@@ -1,47 +1,52 @@
 var startButton = document.getElementById("start-btn");
 var nextButton = document.getElementById("next-btn");
 var questionBoxElement = document.getElementById("question-container");
+var containerElement = document.getElementById("container");
 var questionElement = document.getElementById("question");
 var answerBtnElement = document.getElementById("answer-btns");
 var highscoreBtnElement = document.getElementById("highscore-btn");
 var endBoxElement = document.getElementById("end-container");
+var choice1 = document.getElementById("1");
+var choice2 = document.getElementById("2");
+var choice3 = document.getElementById("3");
+var choice4 = document.getElementById("4");
 
 var timerEl = document.getElementById('countdown');
 
 var shuffledQuestions, currentQuestionIndex;
 
-function countdown() {
-    var timeLeft =60;              // timer start with 60 sec.
+var timeInterval;
+var timeLeft = 60;
 
-    var timeInterval = setInterval(function() {
-        if(timeLeft > 0) {
-            timerEl.textContent = timeLeft;
-            timeLeft--;
-        } else {
-            timerEl.textContent = '';       // set to empty string to get rid of it
-            clearInterval(timeInterval);    // tells timer to quit
-            highscoreBtnElement.classList.remove('hide');  //highscore show up after the timer
-            questionBoxElement.classList.add('hide');
-        }
-    document.getElementById("countdown").innerHTML = timeLeft + " seconds left";
-    }, 1000);
-}
+let score = 0;
 
 function startQuiz() {
-    startButton.classList.add('hide');      // hide the start button
     countdown();
+    startButton.classList.add('hide');      // hide the start button
     endBoxElement.classList.add('hide');  // hide the endBox
     shuffledQuestions = questions.sort(() => Math.random() - .5);
-    currentQuestionIndex = 0;
+    currentQuestionIndex = 0;  
     questionBoxElement.classList.remove('hide');    // shows the question box and choices
     nextQuestion();
+}
+
+function countdown() {
+    var timeInterval = setInterval(function() {
+        timerEl.textContent = timeLeft;
+        timeLeft--;
+    if (timeLeft === 0 || currentQuestionIndex === 4) {
+        clearInterval(timeInterval);
+    }
+    document.getElementById("countdown").innerHTML = timeLeft + " seconds left";
+    }, 1000);
 }
 
 function nextQuestion() {               // what happens when you click the 'next' btn 
     resetAnswer();                        //reset answers
     showQuestion(shuffledQuestions[currentQuestionIndex]);
     questionBoxElement.classList.remove('hide');   // shows the question box and choices
-}
+    console.log(currentQuestionIndex);
+}        
 
 function showQuestion(question) {
     questionElement.innerText = question.question;
@@ -57,8 +62,6 @@ function showQuestion(question) {
     })
 }
 
-
-
 function resetAnswer() {
     nextButton.classList.add("hide");       //want to hide the 'next' btn when the next answer appears
     while (answerBtnElement.firstChild) {
@@ -69,13 +72,13 @@ function resetAnswer() {
 function selectAnswer(event) { 
     var selectedButton = event.target;
     var correct = selectedButton.dataset.correct;
-    var answerScore = 0;
+       
     questionBoxElement.classList.add('hide');       // hide the question box once the answer is selected so user 
     nextButton.classList.remove("hide");            // can only click on the 'next' button
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide')
+
     } else {
-        questionElement.innerText = "End Quiz";     // Replaced 'question' text with 'End Quiz'
         answerBtnElement.classList.add('hide');     // hide answer btn choices
         nextButton.classList.add('hide');           // hide next btn
         highscoreBtnElement.classList.remove('hide');       // show 'high score' button
@@ -143,7 +146,6 @@ var questions = [
 
 
 // TO-DO'S:  
-// stop the timer when quiz is done
 // tally up score
 // localStorage to enter initial when game is completed
 // https://stackoverflow.com/questions/61553701/how-can-i-stop-my-timer-function-if-the-quiz-ends-before-time-is-up-javascript
