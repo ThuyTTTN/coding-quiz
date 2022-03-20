@@ -10,14 +10,14 @@ var submitBtn = document.getElementById("enter-initials");
 var formEl = document.getElementById("enter-initials-box");
 var scoreBox = document.getElementById("scoreBox");
 var timerEl = document.getElementById('countdown');
-
+// var highScoreEl = document.getElementById("highList");
 var shuffledQuestions, currentQuestionIndex;
 
 var timeInterval;
 var timeLeft = 60;
 let score = 0;
 
-
+let finalInfo = [];
 
 function startQuiz() {
     countdown();
@@ -42,22 +42,34 @@ function countdown() {
     }, 1000);
 }
 
-function nextQuestion() {               // what happens when you click the 'next' btn 
-    resetAnswer();                        //reset answers
+// what happens when you click the 'next' btn 
+function nextQuestion() {               
+    resetAnswer();                        
     showQuestion(shuffledQuestions[currentQuestionIndex]);
-    questionBoxElement.classList.remove('hide');   // shows the question box and choices
+    // shows the question box and choices
+    questionBoxElement.classList.remove('hide');   
+    // counting what question # you are on
     console.log(currentQuestionIndex);
 }        
+
+startButton.addEventListener('click', startQuiz);
+//currentQuestion function = ++ increment to next q
+nextButton.addEventListener('click', () => {    
+    currentQuestionIndex++;
+    nextQuestion();
+})
 
 
 function showQuestion(question) {
     questionElement.innerText = question.question;
-    question.answers.forEach(answer => {            // replacing button with the text answer choices
+    // replacing button with the text answer choices
+    question.answers.forEach(answer => {            
         var button = document.createElement("button");
         button.innerText = answer.text;
         button.classList.add('btn');
         if (answer.correct) {
-            button.dataset.correct = answer.correct;        // storing answer in dataset
+            // storing answer in dataset
+            button.dataset.correct = answer.correct;        
         }
         button.addEventListener('click', selectAnswer);
         answerBtnElement.appendChild(button);
@@ -65,7 +77,8 @@ function showQuestion(question) {
 }
 
 function resetAnswer() {
-    nextButton.classList.add("hide");       //want to hide the 'next' btn when the next answer appears
+    //want to hide the 'next' btn when the next answer appears
+    nextButton.classList.add("hide");       
     while (answerBtnElement.firstChild) {
         answerBtnElement.removeChild(answerBtnElement.firstChild);
     }
@@ -80,22 +93,23 @@ function selectAnswer(event) {
     } else {
         timeLeft -= 10;
     }
-       
-    questionBoxElement.classList.add('hide');       // hide the question box once the answer is selected so user 
-    nextButton.classList.remove("hide");            // can only click on the 'next' buttons
+    // hide the question box once the answer is selected   
+    questionBoxElement.classList.add('hide');       
+    nextButton.classList.remove("hide");            
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide')
-
     } else {
         endGame();
     }
 }
 
 function endGame() {
-    var finalScore = score;         // log score
+    // log score
+    var finalScore = score;         
     scoreBox.textContent = "Your score is " + finalScore + ".";
     console.log(finalScore);
-    localStorage.setItem("finalScore", finalScore);    //store score 
+    //store score 
+    localStorage.setItem("finalScore", finalScore);    
     timeLeft ="";
     timerEl.textContent = "";
 
@@ -103,21 +117,40 @@ function endGame() {
     answerBtnElement.classList.add('hide');     // hide answer btn choices
     nextButton.classList.add('hide');           // hide next btn
     endBoxElement.classList.remove('hide');     // show endBox
+
+    formEl.addEventListener("submit", (event) => {
+        event.preventDefault();
+        var userInput = document.querySelector("input[name='Initials']").value;
+        console.log(userInput);
+        localStorage.setItem("User", userInput);
+
+        //getting highscore
+        var userScore = {
+            initials: userInput,
+            score: finalScore
+        };
+        
+        var finalInfo = JSON.parse(localStorage.getItem("finalInfo")) || [];
+        finalInfo.push(userScore);
+        
+        localStorage.setItem("finalInfo", JSON.stringify(finalInfo));
+
+        showScores();
+
+    })
+
 }
 
-formEl.addEventListener("submit", (event) => {
-    event.preventDefault();
-    var userInput = document.querySelector("input[name='Initials']").value;
-    console.log(userInput);
-    localStorage.setItem("User", userInput);
-})
+function showScores() {
+    var finalInfo = JSON.parse(localStorage.getItem("finalInfo")) || [];
+    for (i = 0; i < finalInfo.length; i++) {
+        var submitEl = document.createElement("li");
+        submitEl.className = "result";
+        submitEl.textContent = finalInfo[i].initials + " : " + finalInfo[i].score;
+        scoreBox.appendChild(submitEl);
+    }
+}    
 
-
-startButton.addEventListener('click', startQuiz);
-nextButton.addEventListener('click', () => {    //currentQuestion function = ++ increment to next q
-    currentQuestionIndex++;
-    nextQuestion();
-})
 
 
 var questions = [
@@ -165,6 +198,5 @@ var questions = [
             {text: "else", correct: false},
             {text: "switch", correct: false}
         ]
-    },
-           
+    },      
 ]
