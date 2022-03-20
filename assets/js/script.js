@@ -8,15 +8,16 @@ var highscoreBtnElement = document.getElementById("highscore-btn");
 var endBoxElement = document.getElementById("end-container");
 var submitBtn = document.getElementById("enter-initials");
 var formEl = document.getElementById("enter-initials-box");
-
+var scoreBox = document.getElementById("scoreBox");
 var timerEl = document.getElementById('countdown');
 
 var shuffledQuestions, currentQuestionIndex;
 
 var timeInterval;
 var timeLeft = 60;
-
 let score = 0;
+
+
 
 function startQuiz() {
     countdown();
@@ -92,19 +93,23 @@ function selectAnswer(event) {
 
 function endGame() {
     var finalScore = score;         // log score
-    timeLeft = 0;
+    scoreBox.textContent = "Your score is " + finalScore + ".";
+    console.log(finalScore);
+    localStorage.setItem("finalScore", finalScore);    //store score 
+    timeLeft ="";
     timerEl.textContent = "";
-    questionBoxElement.classList.add('hide');
+
+    questionBoxElement.classList.add('hide');   // hide questions
     answerBtnElement.classList.add('hide');     // hide answer btn choices
     nextButton.classList.add('hide');           // hide next btn
     endBoxElement.classList.remove('hide');     // show endBox
-    
 }
 
 formEl.addEventListener("submit", (event) => {
     event.preventDefault();
     var userInput = document.querySelector("input[name='Initials']").value;
     console.log(userInput);
+    localStorage.setItem("User", userInput);
 })
 
 
@@ -163,10 +168,3 @@ var questions = [
     },
            
 ]
-
-
-
-// TO-DO'S:  
-// tally up score
-// localStorage to enter initial when game is completed
-// https://stackoverflow.com/questions/61553701/how-can-i-stop-my-timer-function-if-the-quiz-ends-before-time-is-up-javascript
