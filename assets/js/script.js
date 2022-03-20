@@ -30,12 +30,14 @@ function startQuiz() {
 
 function countdown() {
     var timeInterval = setInterval(function() {
-        timerEl.textContent = timeLeft;
+    if (timeLeft >=1){
+        timerEl.textContent = timeLeft + " seconds remaining";
         timeLeft--;
-    if (timeLeft === 0 || currentQuestionIndex === 4) {
-        clearInterval(timeInterval);
     }
-    document.getElementById("countdown").innerHTML = timeLeft + " seconds left";
+    else if (timeLeft === 0) {
+        clearInterval(timeInterval);
+        endGame();
+    }
     }, 1000);
 }
 
@@ -84,12 +86,19 @@ function selectAnswer(event) {
         nextButton.classList.remove('hide')
 
     } else {
-        answerBtnElement.classList.add('hide');     // hide answer btn choices
-        nextButton.classList.add('hide');           // hide next btn
-        highscoreBtnElement.classList.remove('hide');       // show 'high score' button
-        endBoxElement.classList.remove('hide');     // show endBox
-
+        endGame();
     }
+}
+
+function endGame() {
+    var finalScore = score;         // log score
+    timeLeft = 0;
+    timerEl.textContent = "";
+    questionBoxElement.classList.add('hide');
+    answerBtnElement.classList.add('hide');     // hide answer btn choices
+    nextButton.classList.add('hide');           // hide next btn
+    endBoxElement.classList.remove('hide');     // show endBox
+    
 }
 
 formEl.addEventListener("submit", (event) => {
