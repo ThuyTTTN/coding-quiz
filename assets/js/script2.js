@@ -6,8 +6,7 @@ var questionElement = document.getElementById("question");
 var answerBtnElement = document.getElementById("answer-btns");
 var highscoreBtnElement = document.getElementById("highscore-btn");
 var endBoxElement = document.getElementById("end-container");
-var submitBtn = document.getElementById("enter-initials");
-var formEl = document.getElementById("enter-initials-box");
+
 
 var timerEl = document.getElementById('countdown');
 
@@ -20,6 +19,7 @@ let score = 0;
 
 function startQuiz() {
     countdown();
+    score = 0;             // start score count at 0
     startButton.classList.add('hide');      // hide the start button
     endBoxElement.classList.add('hide');  // hide the endBox
     shuffledQuestions = questions.sort(() => Math.random() - .5);
@@ -71,15 +71,27 @@ function resetAnswer() {
 function selectAnswer(event) { 
     var selectedButton = event.target;
     var correct = selectedButton.dataset.correct;
-    if (correct) {
-        score += timeLeft;
-        console.log("time" + score);
-    } else {
-        timeLeft -= 10;
+    setStatusClass(document.body, correct)
+    Array.from(answerBtnElement.children).forEach(button => {
+        setStatusClass(button, button.dataset.correct)
+    })
+
+    function setStatusClass(element, correct) {
+        clearStatusClass(element)
+        if (correct) {
+            element.classList.add('correct')
+        } else {
+            element.classList.add('wrong')
+        }
+    }
+
+    function clearStatusClass(element) {
+        element.classList.remove('correct')
+        element.classList.remove('wrong')
     }
        
     questionBoxElement.classList.add('hide');       // hide the question box once the answer is selected so user 
-    nextButton.classList.remove("hide");            // can only click on the 'next' buttons
+    nextButton.classList.remove("hide");            // can only click on the 'next' button
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide')
 
@@ -88,15 +100,8 @@ function selectAnswer(event) {
         nextButton.classList.add('hide');           // hide next btn
         highscoreBtnElement.classList.remove('hide');       // show 'high score' button
         endBoxElement.classList.remove('hide');     // show endBox
-
     }
 }
-
-formEl.addEventListener("submit", (event) => {
-    event.preventDefault();
-    var userInput = document.querySelector("input[name='Initials']").value;
-    console.log(userInput);
-})
 
 
 startButton.addEventListener('click', startQuiz);
