@@ -10,7 +10,6 @@ var submitBtn = document.getElementById("enter-initials");
 var formEl = document.getElementById("enter-initials-box");
 var scoreBox = document.getElementById("scoreBox");
 var timerEl = document.getElementById('countdown');
-// var highScoreEl = document.getElementById("highList");
 var shuffledQuestions, currentQuestionIndex;
 
 var timeInterval;
@@ -52,13 +51,16 @@ function nextQuestion() {
     console.log(currentQuestionIndex);
 }        
 
-startButton.addEventListener('click', startQuiz);
+startButton.addEventListener('click', () => {
+    restart();
+    startQuiz();
+})
+
 //currentQuestion function = ++ increment to next q
 nextButton.addEventListener('click', () => {    
     currentQuestionIndex++;
     nextQuestion();
 })
-
 
 function showQuestion(question) {
     questionElement.innerText = question.question;
@@ -132,18 +134,19 @@ function endGame() {
         
         var finalInfo = JSON.parse(localStorage.getItem("finalInfo")) || [];
         finalInfo.push(userScore);
-        
         localStorage.setItem("finalInfo", JSON.stringify(finalInfo));
-
         showScores();
-
     })
-
 }
 
 function showScores() {
+    formEl.remove();
+    startButton.innerText= "Restart";
+    startButton.classList.remove("hide");
+
     var finalInfo = JSON.parse(localStorage.getItem("finalInfo")) || [];
     for (i = 0; i < finalInfo.length; i++) {
+        //creating new list to display scores
         var submitEl = document.createElement("li");
         submitEl.className = "result";
         submitEl.textContent = finalInfo[i].initials + " : " + finalInfo[i].score;
@@ -151,6 +154,13 @@ function showScores() {
     }
 }    
 
+function restart() {
+    questionBoxElement.classList.remove('hide');   
+    answerBtnElement.classList.remove('hide');     
+    nextButton.classList.remove('hide');           
+    endBoxElement.classList.add('hide'); 
+    timeLeft = 60;    
+}
 
 
 var questions = [
