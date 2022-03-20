@@ -144,6 +144,8 @@ function showScores() {
     startButton.innerText= "Restart";
     startButton.classList.remove("hide");
 
+
+
     var finalInfo = JSON.parse(localStorage.getItem("finalInfo")) || [];
     for (i = 0; i < finalInfo.length; i++) {
         //creating new list to display scores
@@ -161,7 +163,6 @@ function restart() {
     endBoxElement.classList.add('hide'); 
     timeLeft = 60;    
 }
-
 
 var questions = [
     {
